@@ -515,6 +515,17 @@ p {
 
 /* ============ VIDEOS ============ */
 
+.videos-instagram {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.videos-instagram-text {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
 .videos-grid {
   display: grid;
   grid-template-columns: 1fr;
