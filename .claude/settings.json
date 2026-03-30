@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/djmikeonz/ClaudeLearning/DJmikeonz_website && git add index.html main.js style.css .gitignore .claude/settings.json 2>/dev/null; git diff --cached --quiet || (git commit -m \"Auto-save: $(date '+%Y-%m-%d %H:%M') - session changes\" && git push origin main) 2>/dev/null || true",
+            "timeout": 30,
+            "statusMessage": "Saving to GitHub..."
+          }
+        ]
+      }
+    ]
+  }
+}
