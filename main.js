@@ -106,6 +106,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   sections.forEach(section => sectionObserver.observe(section));
 
+  // ============ EVENT TYPE — "OTHER" FIELD ============
+
+  const otherRadio = document.getElementById('event-type-other');
+  const otherWrap  = document.getElementById('other-event-wrap');
+  const otherInput = document.getElementById('other-event-type');
+
+  if (otherRadio && otherWrap) {
+    document.querySelectorAll('input[name="event_type"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const show = otherRadio.checked;
+        otherWrap.style.display = show ? 'block' : 'none';
+        otherInput.required = show;
+      });
+    });
+  }
+
   // ============ BOOKING FORM (Formspree AJAX) ============
 
   const form       = document.getElementById('booking-form');
