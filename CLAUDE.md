@@ -42,4 +42,14 @@ Copy any `.review-card` block in `index.html` and paste it before the closing `<
 
 - **Repo:** `tekflix-projects/DJmikeonz-website` (private)
 - **Branch:** `main`
-- Commit and push after every meaningful change. A Stop hook in `.claude/settings.json` auto-commits session changes as a fallback, but explicit commits with descriptive messages are preferred for real features/fixes.
+- **Push command:** `git push origin main`
+
+### Commit discipline (required)
+
+Commit and push to GitHub **throughout the work** — not just at the end. Every completed unit of work (a feature added, a section updated, a bug fixed, a placeholder replaced) should get its own commit before moving on. This ensures no work is ever lost and the history is always in a clean, recoverable state.
+
+Commit message format:
+- One concise subject line describing *what changed and why* (e.g. `Replace VIDEO_ID placeholders with real YouTube embeds`)
+- Stage only the files relevant to that change — never batch unrelated edits into one commit
+
+A Stop hook in `.claude/settings.json` auto-commits any remaining uncommitted changes at the end of each session as a safety net, but it does not replace making explicit, well-named commits during the work.
