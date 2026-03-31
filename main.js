@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (response.ok) {
-          successMsg.textContent = "Thank you! Mike will be in touch within 24 hours.";
+          successMsg.textContent = "Thank you! DJ MIKEONZ will be in touch within 24 hours.";
           successMsg.hidden = false;
           form.reset();
         } else {
