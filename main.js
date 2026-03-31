@@ -135,14 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Guard: don't submit if Formspree ID hasn't been set
-      if (form.action.includes('YOUR_FORM_ID')) {
-        errorMsg.textContent = 'Booking form not yet configured. Please check back soon or reach out via social media.';
-        errorMsg.hidden = false;
-        successMsg.hidden = true;
-        return;
-      }
-
       // Show loading state
       btnText.hidden    = true;
       btnLoading.hidden = false;
