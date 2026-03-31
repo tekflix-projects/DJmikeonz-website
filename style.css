@@ -624,7 +624,8 @@ p {
 .social-btn.tiktok:hover    { color: #69c9d0; border-color: #69c9d040; }
 .social-btn.facebook:hover  { color: #1877f2; border-color: #1877f240; }
 .social-btn.spotify:hover   { color: #1ed760; border-color: #1ed76040; }
-.social-btn.youtube:hover   { color: #ff0000; border-color: #ff000040; }
+.social-btn.youtube:hover      { color: #ff0000; border-color: #ff000040; }
+.social-btn.soundcloud:hover   { color: #ff5500; border-color: #ff550040; }
 
 /* ============ REVIEWS ============ */
 
