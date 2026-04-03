@@ -122,6 +122,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ============ REVIEW TEXT — EXPAND/COLLAPSE ============
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.review-text').forEach(textEl => {
+      if (textEl.scrollHeight <= textEl.clientHeight + 2) return;
+      const btn = document.createElement('button');
+      btn.className = 'review-expand-btn';
+      btn.textContent = 'Show more';
+      btn.addEventListener('click', () => {
+        const expanded = textEl.classList.toggle('expanded');
+        btn.textContent = expanded ? 'Show less' : 'Show more';
+      });
+      textEl.insertAdjacentElement('afterend', btn);
+    });
+  });
+
   // ============ BOOKING FORM (Formspree AJAX) ============
 
   const form       = document.getElementById('booking-form');
