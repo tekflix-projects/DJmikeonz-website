@@ -437,7 +437,7 @@ p {
 }
 
 .photo-placeholder {
-  width: min(320px, 100%);
+  width: min(240px, 100%);
   aspect-ratio: 3 / 4;
   border-radius: 12px;
   border: 1px solid var(--accent-gold-border);
@@ -979,7 +979,7 @@ textarea::placeholder {
 
 @media (min-width: 1024px) {
   .about-grid {
-    grid-template-columns: 380px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 72px;
     align-items: start;
   }
