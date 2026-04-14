@@ -122,6 +122,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ============ REFERRAL SOURCE — "OTHER" FIELD ============
+
+  const referralSelect    = document.getElementById('referral');
+  const referralOtherWrap = document.getElementById('referral-other-wrap');
+  const referralOtherInput = document.getElementById('referral-other');
+
+  if (referralSelect && referralOtherWrap) {
+    referralSelect.addEventListener('change', () => {
+      const show = referralSelect.value === 'Other';
+      referralOtherWrap.style.display = show ? 'block' : 'none';
+      referralOtherInput.required = show;
+    });
+  }
+
   // ============ REVIEW TEXT — EXPAND/COLLAPSE ============
 
   requestAnimationFrame(() => {

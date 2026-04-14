@@ -496,26 +496,17 @@
 
         <!-- Venue -->
         <div class="form-group">
-          <label for="venue-name">Name &amp; Address of the Event <span class="required">*</span></label>
+          <label for="venue-name">Venue Name <span class="required">*</span></label>
           <input type="text" id="venue-name" name="venue_name" placeholder="Venue name" required>
         </div>
-        <div class="form-group">
-          <input type="text" name="venue_street" placeholder="Street address">
-        </div>
         <div class="form-row">
           <div class="form-group">
-            <input type="text" name="venue_city" placeholder="City">
+            <label for="venue-city">City <span class="required">*</span></label>
+            <input type="text" id="venue-city" name="venue_city" placeholder="City" required>
           </div>
           <div class="form-group">
-            <input type="text" name="venue_state" placeholder="State / Province">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <input type="text" name="venue_zip" placeholder="Postal / Zip Code">
-          </div>
-          <div class="form-group">
-            <input type="text" name="venue_country" placeholder="Country">
+            <label for="venue-state">State <span class="required">*</span></label>
+            <input type="text" id="venue-state" name="venue_state" placeholder="State" required>
           </div>
         </div>
 
@@ -547,14 +538,20 @@
         <!-- Uplighting & Cold Spark -->
         <div class="form-row">
           <div class="form-group">
-            <label for="uplighting">Do you need uplighting for this event?</label>
-            <input type="text" id="uplighting" name="uplighting" placeholder="Yes / No / How many">
-            <span class="field-hint">6 uplights are complimentary for weddings</span>
+            <label for="uplighting">Uplighting</label>
+            <select id="uplighting" name="uplighting">
+              <option value="None">None</option>
+              <option value="6 uplights (complimentary)">6 uplights (complimentary for weddings)</option>
+              <option value="More than 6 uplights">More than 6 uplights</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="cold-spark">Do you need cold spark for this event?</label>
-            <input type="text" id="cold-spark" name="cold_spark" placeholder="Yes / No / How many">
-            <span class="field-hint">2 available at $50 per machine</span>
+            <label for="cold-spark">Cold Spark</label>
+            <select id="cold-spark" name="cold_spark">
+              <option value="None">None</option>
+              <option value="1 machine ($50)">1 machine ($50)</option>
+              <option value="2 machines ($100)">2 machines ($100)</option>
+            </select>
           </div>
         </div>
 
@@ -567,12 +564,24 @@
         <!-- How did you hear -->
         <div class="form-group">
           <label for="referral">How did you hear about DJ MIKEONZ?</label>
-          <textarea id="referral" name="referral_source" rows="2" placeholder="Instagram, Google, word of mouth, etc."></textarea>
+          <select id="referral" name="referral_source">
+            <option value="" disabled selected>Please Select</option>
+            <option value="Instagram">Instagram</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Google">Google</option>
+            <option value="Word of mouth">Word of mouth</option>
+            <option value="Past client">Past client</option>
+            <option value="Wedding planner / coordinator">Wedding planner / coordinator</option>
+            <option value="Other">Other</option>
+          </select>
+          <div id="referral-other-wrap" style="display:none; margin-top:0.75rem;">
+            <input type="text" id="referral-other" name="referral_other" placeholder="Please tell us more" style="width:100%; padding:0.65rem 1rem; background:#1a1a1a; border:1px solid #333; border-radius:6px; color:#fff; font-family:inherit; font-size:0.95rem;">
+          </div>
         </div>
 
         <div class="form-submit">
           <button type="submit" class="btn-primary btn-full" id="submit-btn">
-            <span class="btn-text">Submit Intake Form</span>
+            <span class="btn-text">Request a Quote</span>
             <span class="btn-loading" hidden>Sending...</span>
           </button>
         </div>
