@@ -152,6 +152,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ============ CONTACT FORM (Formspree AJAX) ============
+
+  const contactForm      = document.getElementById('contact-form');
+  const contactSubmitBtn = document.getElementById('contact-submit-btn');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const cBtnText    = contactSubmitBtn.querySelector('.btn-text');
+      const cBtnLoading = contactSubmitBtn.querySelector('.btn-loading');
+      const cSuccess    = document.getElementById('contact-form-success');
+      const cError      = document.getElementById('contact-form-error');
+
+      cBtnText.hidden          = true;
+      cBtnLoading.hidden       = false;
+      contactSubmitBtn.disabled = true;
+      cSuccess.hidden          = true;
+      cError.hidden            = true;
+
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          cSuccess.hidden = false;
+          contactForm.reset();
+        } else {
+          const data = await response.json().catch(() => ({}));
+          cError.textContent = data.errors
+            ? data.errors.map(err => err.message).join(', ')
+            : 'Something went wrong. Please try again.';
+          cError.hidden = false;
+        }
+      } catch {
+        cError.textContent = 'Could not send your message. Please check your connection and try again.';
+        cError.hidden = false;
+      } finally {
+        cBtnText.hidden           = false;
+        cBtnLoading.hidden        = true;
+        contactSubmitBtn.disabled = false;
+      }
+    });
+  }
+
   // ============ BOOKING FORM (Formspree AJAX) ============
 
   const form       = document.getElementById('booking-form');
