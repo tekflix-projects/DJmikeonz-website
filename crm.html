@@ -23,13 +23,12 @@
       --radius:          8px;
       --transition:      0.25s ease;
 
-      /* Status colors */
-      --status-lead:      #4a9eff;
-      --status-contacted: #f59e0b;
-      --status-quoted:    #a78bfa;
-      --status-booked:    #34d399;
-      --status-completed: #6b7280;
-      --status-archived:  #374151;
+      /* Status colors — pipeline: new-inquiry → quoted → deposit-received → completed */
+      --status-new-inquiry:      #4a9eff;
+      --status-quoted:           #a78bfa;
+      --status-deposit-received: #c9a84c;
+      --status-completed:        #34d399;
+      --status-archived:         #6b7280;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -285,12 +284,11 @@
       text-transform: uppercase;
     }
 
-    .badge-lead      { background: rgba(74,158,255,0.15); color: var(--status-lead); }
-    .badge-contacted { background: rgba(245,158,11,0.15); color: var(--status-contacted); }
-    .badge-quoted    { background: rgba(167,139,250,0.15); color: var(--status-quoted); }
-    .badge-booked    { background: rgba(52,211,153,0.15); color: var(--status-booked); }
-    .badge-completed { background: rgba(107,114,128,0.15); color: var(--status-completed); }
-    .badge-archived  { background: rgba(55,65,81,0.15); color: #6b7280; }
+    .badge-new-inquiry      { background: rgba(74,158,255,0.15);  color: var(--status-new-inquiry); }
+    .badge-quoted           { background: rgba(167,139,250,0.15); color: var(--status-quoted); }
+    .badge-deposit-received { background: rgba(201,168,76,0.15);  color: var(--status-deposit-received); }
+    .badge-completed        { background: rgba(52,211,153,0.15);  color: var(--status-completed); }
+    .badge-archived         { background: rgba(107,114,128,0.15); color: var(--status-archived); }
 
     /* ===== FILTERS ===== */
 
@@ -753,10 +751,9 @@
 
     <div class="filters" id="statusFilters">
       <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="lead">Lead</button>
-      <button class="filter-btn" data-filter="contacted">Contacted</button>
+      <button class="filter-btn" data-filter="new-inquiry">New Inquiry</button>
       <button class="filter-btn" data-filter="quoted">Quoted</button>
-      <button class="filter-btn" data-filter="booked">Booked</button>
+      <button class="filter-btn" data-filter="deposit-received">Deposit Received</button>
       <button class="filter-btn" data-filter="completed">Completed</button>
       <button class="filter-btn" data-filter="archived">Archived</button>
     </div>
@@ -814,10 +811,9 @@
         <div class="form-group">
           <label for="f-status">Status</label>
           <select id="f-status">
-            <option value="lead">Lead</option>
-            <option value="contacted">Contacted</option>
+            <option value="new-inquiry">New Inquiry</option>
             <option value="quoted">Quoted</option>
-            <option value="booked">Booked</option>
+            <option value="deposit-received">Deposit Received</option>
             <option value="completed">Completed</option>
             <option value="archived">Archived</option>
           </select>
@@ -834,7 +830,11 @@
             <option>Wedding — Ceremony + Cocktail + Reception</option>
             <option>Wedding — Reception Only</option>
             <option>Wedding — Ceremony Only</option>
+            <option>Baby Shower</option>
             <option>Birthday Party</option>
+            <option>Quinceanera</option>
+            <option>Sweet 16</option>
+            <option>Graduation Party</option>
             <option>Corporate Event</option>
             <option>Other</option>
           </select>
@@ -848,8 +848,12 @@
           <input type="number" id="f-guests" placeholder="e.g. 120" min="1">
         </div>
         <div class="form-group">
-          <label for="f-quote">Quote / Budget ($)</label>
+          <label for="f-quote">Quote Amount ($)</label>
           <input type="number" id="f-quote" placeholder="e.g. 2500" min="0">
+        </div>
+        <div class="form-group">
+          <label for="f-deposit">Deposit Received ($)</label>
+          <input type="number" id="f-deposit" placeholder="e.g. 200" min="0">
         </div>
         <div class="form-group">
           <label for="f-source">Lead Source</label>
@@ -944,13 +948,13 @@ function daysUntil(iso) {
 }
 
 function badgeHtml(status) {
-  const labels = { lead:'Lead', contacted:'Contacted', quoted:'Quoted', booked:'Booked', completed:'Completed', archived:'Archived' };
+  const labels = { 'new-inquiry':'New Inquiry', quoted:'Quoted', 'deposit-received':'Deposit Received', completed:'Completed', archived:'Archived' };
   return `<span class="badge badge-${status}">${labels[status] || status}</span>`;
 }
 
 function statusSelectHtml(id, current) {
-  const opts = ['lead','contacted','quoted','booked','completed','archived'];
-  const labels = { lead:'Lead', contacted:'Contacted', quoted:'Quoted', booked:'Booked', completed:'Completed', archived:'Archived' };
+  const opts = ['new-inquiry','quoted','deposit-received','completed','archived'];
+  const labels = { 'new-inquiry':'New Inquiry', quoted:'Quoted', 'deposit-received':'Deposit Received', completed:'Completed', archived:'Archived' };
   let html = `<select class="status-select-inline badge-${current}" onchange="quickStatus('${id}', this.value)">`;
   opts.forEach(o => html += `<option value="${o}" ${o===current?'selected':''}>${labels[o]}</option>`);
   html += '</select>';
@@ -961,23 +965,29 @@ function statusSelectHtml(id, current) {
 
 function renderDashboard() {
   const now = new Date(); now.setHours(0,0,0,0);
-  const active = leads.filter(l => !['completed','archived'].includes(l.status));
-  const booked = leads.filter(l => l.status === 'booked');
-  const upcoming = leads.filter(l => l.eventDate && l.status === 'booked' && daysUntil(l.eventDate) >= 0)
+  const newInquiries = leads.filter(l => l.status === 'new-inquiry');
+  const quoted       = leads.filter(l => l.status === 'quoted');
+  const deposited    = leads.filter(l => l.status === 'deposit-received');
+  const upcoming = leads.filter(l => l.eventDate && l.status === 'deposit-received' && daysUntil(l.eventDate) >= 0)
     .sort((a,b) => a.eventDate.localeCompare(b.eventDate));
   const thisYear = leads.filter(l => l.status === 'completed' && l.eventDate && l.eventDate.startsWith(new Date().getFullYear()));
   const revenue = thisYear.reduce((s, l) => s + (Number(l.quote) || 0), 0);
 
   document.getElementById('statsGrid').innerHTML = `
     <div class="stat-card">
-      <div class="stat-label">Open Leads</div>
-      <div class="stat-value">${active.length}</div>
-      <div class="stat-sub">in pipeline</div>
+      <div class="stat-label">New Inquiries</div>
+      <div class="stat-value">${newInquiries.length}</div>
+      <div class="stat-sub">awaiting quote</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Booked</div>
-      <div class="stat-value">${booked.length}</div>
-      <div class="stat-sub">confirmed events</div>
+      <div class="stat-label">Quoted</div>
+      <div class="stat-value">${quoted.length}</div>
+      <div class="stat-sub">contract sent</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Deposit Received</div>
+      <div class="stat-value">${deposited.length}</div>
+      <div class="stat-sub">dates secured</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Upcoming (30d)</div>
@@ -988,11 +998,6 @@ function renderDashboard() {
       <div class="stat-label">Revenue ${new Date().getFullYear()}</div>
       <div class="stat-value" style="font-size:1.5rem;">${fmtMoney(revenue)}</div>
       <div class="stat-sub revenue-note">from completed events</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Total Events</div>
-      <div class="stat-value">${leads.filter(l => l.status === 'completed').length}</div>
-      <div class="stat-sub">all time completed</div>
     </div>
   `;
 
@@ -1020,7 +1025,7 @@ function renderDashboard() {
   }
 
   // Open leads mini table
-  const openLeads = leads.filter(l => ['lead','contacted','quoted'].includes(l.status))
+  const openLeads = leads.filter(l => ['new-inquiry','quoted','deposit-received'].includes(l.status))
     .sort((a,b) => (a.eventDate||'').localeCompare(b.eventDate||''));
 
   if (openLeads.length === 0) {
@@ -1118,6 +1123,7 @@ function openDetail(id, backView) {
         <div class="detail-field"><span class="detail-field-label">Venue</span><span class="detail-field-value">${l.venue || '—'}</span></div>
         <div class="detail-field"><span class="detail-field-label">Guests</span><span class="detail-field-value">${l.guests || '—'}</span></div>
         <div class="detail-field"><span class="detail-field-label">Quote</span><span class="detail-field-value" style="color:var(--accent-gold);font-weight:600">${fmtMoney(l.quote)}</span></div>
+        ${l.deposit ? `<div class="detail-field"><span class="detail-field-label">Deposit</span><span class="detail-field-value" style="color:var(--status-deposit-received);font-weight:600">${fmtMoney(l.deposit)} received</span></div>` : ''}
       </div>
     </div>
 
@@ -1174,6 +1180,7 @@ function openEdit(id) {
   document.getElementById('f-guests').value  = l.guests || '';
   document.getElementById('f-quote').value   = l.quote || '';
   document.getElementById('f-source').value  = l.source || '';
+  document.getElementById('f-deposit').value = l.deposit || '';
   document.getElementById('f-notes').value   = l.notes || '';
   openModal();
 }
@@ -1200,6 +1207,7 @@ document.getElementById('leadForm').addEventListener('submit', e => {
     guests:    document.getElementById('f-guests').value,
     quote:     document.getElementById('f-quote').value,
     source:    document.getElementById('f-source').value,
+    deposit:   document.getElementById('f-deposit').value,
     notes:     document.getElementById('f-notes').value.trim(),
   };
 
@@ -1239,7 +1247,7 @@ document.getElementById('searchInput').addEventListener('input', renderLeadsTabl
 // ===== EXPORT =====
 
 document.getElementById('exportBtn').addEventListener('click', () => {
-  const cols = ['name','email','phone','status','eventDate','eventType','venue','guests','quote','source','notes','createdAt'];
+  const cols = ['name','email','phone','status','eventDate','eventType','venue','guests','quote','deposit','source','notes','createdAt'];
   const header = cols.join(',');
   const rows = leads.map(l => cols.map(c => {
     const v = (l[c] || '').toString().replace(/"/g, '""');
