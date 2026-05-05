@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /crm.html
 
 Sitemap: https://djmikeonz.com/sitemap.xml
