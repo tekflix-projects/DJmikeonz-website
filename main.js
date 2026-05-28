@@ -250,4 +250,99 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ============ MIN DATE — BOOKING FORM ============
+
+  const dateInput = document.getElementById('event-date');
+  if (dateInput) {
+    dateInput.min = new Date().toISOString().split('T')[0];
+  }
+
+  // ============ YOUTUBE CLICK-TO-PLAY FACADE ============
+
+  document.querySelectorAll('.yt-facade').forEach(facade => {
+    facade.addEventListener('click', () => {
+      const id     = facade.dataset.videoid;
+      const title  = facade.dataset.title || 'DJ MIKEONZ Video';
+      const iframe = document.createElement('iframe');
+      iframe.src   = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = title;
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
+      facade.replaceWith(iframe);
+    }, { once: true });
+  });
+
+  // ============ REVIEWS CAROUSEL NAV ============
+
+  const carousel      = document.querySelector('.reviews-carousel');
+  const prevBtn       = document.getElementById('carouselPrev');
+  const nextBtn       = document.getElementById('carouselNext');
+  const dotsContainer = document.getElementById('carouselDots');
+
+  if (carousel && dotsContainer) {
+    const cards = Array.from(carousel.querySelectorAll('.review-card'));
+
+    cards.forEach((card, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Go to review ${i + 1}`);
+      dot.addEventListener('click', () => scrollToCard(card));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(dotsContainer.querySelectorAll('.carousel-dot'));
+
+    function scrollToCard(card) {
+      carousel.scrollTo({ left: card.offsetLeft - carousel.offsetLeft, behavior: 'smooth' });
+    }
+
+    const cardObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = cards.indexOf(entry.target);
+          dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        }
+      });
+    }, { root: carousel, threshold: 0.55 });
+
+    cards.forEach(card => cardObserver.observe(card));
+
+    prevBtn?.addEventListener('click', () => {
+      const pos    = carousel.scrollLeft;
+      const target = [...cards].reverse().find(c => c.offsetLeft - carousel.offsetLeft < pos - 10);
+      if (target) scrollToCard(target);
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      const pos    = carousel.scrollLeft;
+      const target = cards.find(c => c.offsetLeft - carousel.offsetLeft > pos + 10);
+      if (target) scrollToCard(target);
+    });
+  }
+
+  // ============ FLOATING MOBILE CTA ============
+
+  const floatingCta = document.querySelector('.floating-cta');
+  if (floatingCta) {
+    const heroEl    = document.getElementById('hero');
+    const bookingEl = document.getElementById('booking');
+    let heroVisible    = true;
+    let bookingVisible = false;
+
+    const updateCta = () => {
+      floatingCta.classList.toggle('visible', !heroVisible && !bookingVisible);
+    };
+
+    new IntersectionObserver(([e]) => {
+      heroVisible = e.isIntersecting;
+      updateCta();
+    }, { threshold: 0.2 }).observe(heroEl);
+
+    new IntersectionObserver(([e]) => {
+      bookingVisible = e.isIntersecting;
+      updateCta();
+    }, { threshold: 0.1 }).observe(bookingEl);
+  }
+
 });
