@@ -553,6 +553,13 @@ p {
   margin-bottom: 2rem;
 }
 
+.videos-cta-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .videos-grid {
   display: grid;
   grid-template-columns: 1fr;
