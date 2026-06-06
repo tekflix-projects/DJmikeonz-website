@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (response.ok) {
-          successMsg.textContent = "Thank you! DJ MIKEONZ will be in touch within 24 hours.";
+          successMsg.textContent = "Thanks for your inquiry! I'll be in touch within 24 hours or less.";
           successMsg.hidden = false;
           form.reset();
         } else {
