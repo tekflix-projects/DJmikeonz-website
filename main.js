@@ -179,12 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: { 'Accept': 'application/json' }
         });
 
-        const data = await response.json().catch(() => ({}));
-        if (response.ok && data.success) {
+        if (response.ok) {
           cSuccess.hidden = false;
           contactForm.reset();
         } else {
-          cError.textContent = data.message || 'Something went wrong. Please try again.';
+          const data = await response.json().catch(() => ({}));
+          cError.textContent = data.errors
+            ? data.errors.map(err => err.message).join(', ')
+            : 'Something went wrong. Please try again.';
           cError.hidden = false;
         }
       } catch {
@@ -225,13 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: { 'Accept': 'application/json' }
         });
 
-        const data = await response.json().catch(() => ({}));
-        if (response.ok && data.success) {
+        if (response.ok) {
           successMsg.textContent = "Thanks for your inquiry! I'll be in touch within 24 hours or less.";
           successMsg.hidden = false;
           form.reset();
         } else {
-          errorMsg.textContent = data.message || 'Something went wrong. Please try again.';
+          const data = await response.json().catch(() => ({}));
+          const msg = data.errors
+            ? data.errors.map(err => err.message).join(', ')
+            : 'Something went wrong. Please try again.';
+          errorMsg.textContent = msg;
           errorMsg.hidden = false;
         }
       } catch {
