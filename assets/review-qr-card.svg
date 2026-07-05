@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
+  <rect width="600" height="900" fill="#0a0a0a"/>
+  <rect x="20" y="20" width="560" height="860" fill="none" stroke="#c9a84c" stroke-width="3"/>
+  <text x="50%" y="115" text-anchor="middle" fill="#c9a84c" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="bold" letter-spacing="2">DJ MIKEONZ</text>
+  <text x="50%" y="165" text-anchor="middle" fill="#bbbbbb" font-family="Helvetica, Arial, sans-serif" font-size="21" letter-spacing="4">ENJOYED THE NIGHT?</text>
+  <text x="50%" y="205" text-anchor="middle" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold">Scan to leave a review</text>
+  <text x="50%" y="255" text-anchor="middle" fill="#c9a84c" font-family="Arial, sans-serif" font-size="40" letter-spacing="6">★ ★ ★ ★ ★</text>
+  <rect x="120" y="300" width="360" height="360" rx="16" fill="#ffffff"/>
+  <image x="140" y="320" width="320" height="320" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApAAAAKQAQMAAAASe9gTAAAABlBMVEUKCgr///8hT0R+AAACvElEQVR42u3dSWrDQBAFUJP739lZZFDXIEPAEKh6BhPZsd6m4VOtnh7Pt78eSCQSiUQikcjl5CO8rs9fV98//P0uAene5/Pj8fYXEolE/j/5nZdn/l0p+XV9vnOe1nvlJRKJnJ6XVxbm/It1Zaw4u3s1DxKJ3JOX539qRVnrS3mJRCLl5VlHXn/POlNeIpHIbXkZn1/WPnn9/13/XfMgkcjJeRm/+ds7a5oHiUTOzct2otFRO56/rBVpfmkeJBI5PS9jEp71Y6wiX40JyUskEjk9L2NK5n55fmoZR3pyNap5kEjk7PryrBJj1dlVlLXffv1X8yCRyPn1Zd+/jv3y+I61qbxEIpEb8vKqHbuVj+fv8305OTUPEomc3R+PtWKcY1lXR+YnmMZ7kEjkjrysoz05F/vrfv6R5kEikZPzMn/KKZrXPOaq87zSPEgkcnZe5kzM8y/zfpd1VF19iUQi9/TH42zLPPuyWzvZOZoHiUTOzct+NU+/r/p5XVeQy0skEjm/Px7TsqZgHjPva1J5iUQi5/fHz+zMmVmfX/brgeQlEonc0h+/W+VTV47XeZvqSyQSuac/3qdl94yy3mm+OhKJ3FJfdueY1T027nrgserUPEgkcnZe5l3b7k8Y7+a4m6+ORCJ35WVdEdk9o+x3MfL8EolEbsjLfNLj3SjQq9H06z7Ng0QiJ9eXdXy8743HqjKfD6k/jkQi59eXeZf0nKT9mbp9z17zIJHIyfVl/xSz9sb7XTiMjyORyE31Ze2hd3PTX51QIS+RSOSGvKyn6tZe+d0+mfISiUTuysufT/1YeTeTqN+TQ14ikchNeXnmX6xBX1em6kskErmvvuxWQtZR8f6sCs2DRCJn52V/Hk93AuSVjv1uRZoHiUROzsv8Td/Xzr+pp//ISyQSOTsv3/tCIpFIJBKJRC4mPwEj8bkPTrPzAQAAAABJRU5ErkJggg=="/>
+  <text x="50%" y="720" text-anchor="middle" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="22">Point your camera here 📷</text>
+  <text x="50%" y="760" text-anchor="middle" fill="#888888" font-family="Helvetica, Arial, sans-serif" font-size="16">Takes 20 seconds • Your feedback means the world</text>
+  <text x="50%" y="835" text-anchor="middle" fill="#c9a84c" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="2">DALLAS – FORT WORTH, TX</text>
+</svg>
