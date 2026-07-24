@@ -1630,9 +1630,10 @@ textarea::placeholder {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
-    linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.35) 40%, rgba(10,10,10,0.85) 100%),
-    radial-gradient(ellipse at 50% 42%, rgba(10,10,10,0) 30%, rgba(10,10,10,0.7) 100%);
+    linear-gradient(to bottom, rgba(10,10,10,0.62) 0%, rgba(10,10,10,0.45) 42%, rgba(10,10,10,0.9) 100%),
+    radial-gradient(ellipse at 50% 46%, rgba(10,10,10,0) 26%, rgba(10,10,10,0.72) 100%);
 }
 .hero-video {
   position: absolute;
@@ -1640,7 +1641,17 @@ textarea::placeholder {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 42%;
   z-index: 0;
+}
+/* Honor reduced-motion: hold the poster still instead of the loop */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+  .hero-media {
+    background-image: url("assets/dj-hero-poster.jpg");
+    background-size: cover;
+    background-position: center 42%;
+  }
 }
 /* Soft vignette on the hero regardless of media — adds depth */
 #hero::after {
@@ -1664,6 +1675,20 @@ textarea::placeholder {
   font-weight: 600;
   letter-spacing: -0.005em;
   margin-bottom: 32px;
+}
+/* Narrow phones: the hero is a flexbox, so the inline-block headline was
+   stretching .hero-content to its longest line and overflowing to the right.
+   Constrain the content box and let the headline wrap. Desktop is untouched. */
+@media (max-width: 600px) {
+  #hero { padding-left: 18px; padding-right: 18px; }
+  .hero-content { width: 100%; max-width: 100%; min-width: 0; }
+  #hero h1 {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    font-size: clamp(1.9rem, 8vw, 3rem);
+    overflow-wrap: break-word;
+  }
 }
 .hero-tagline {
   background: var(--gold-gradient);
