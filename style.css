@@ -9,17 +9,25 @@
   --bg-secondary:    #111111;
   --bg-card:         #161616;
   --accent-gold:     #c9a84c;
+  --accent-gold-soft: #e2cd8e;   /* lighter champagne highlight */
+  --accent-gold-deep: #a8863a;   /* darker edge for metallic depth */
   --accent-gold-dim: rgba(201, 168, 76, 0.12);
   --accent-gold-border: rgba(201, 168, 76, 0.3);
+  --hairline:        rgba(201, 168, 76, 0.16);  /* ultra-fine luxury rule */
+  /* Metallic champagne sheen — used on select display accents */
+  --gold-gradient:   linear-gradient(135deg, #f0e1ac 0%, #d9be74 38%, #c9a84c 60%, #a8863a 100%);
   --text-primary:    #f5f5f5;
   --text-secondary:  #a0a0a0;
   --text-muted:      #555555;
-  --section-padding: clamp(70px, 10vw, 130px);
-  --container-width: 1160px;
+  --section-padding: clamp(80px, 11vw, 150px);
+  --container-width: 1200px;
   --font-display:    'Cormorant Garamond', Georgia, serif;
   --font-body:       'Inter', system-ui, sans-serif;
   --radius:          8px;
   --transition:      0.25s ease;
+  /* Drop a cinematic hero photo/video frame in here when you have one:
+     just set --hero-image below to  url("your-photo.jpg")  */
+  --hero-image:      none;
 }
 
 /* ============ RESET & BASE ============ */
@@ -1558,4 +1566,191 @@ textarea::placeholder {
 
 .footer-links a:hover {
   color: var(--accent-gold);
+}
+
+/* =====================================================================
+   LUXURY REFINEMENTS
+   A cohesive polish layer — elevates hero, type, buttons, dividers,
+   stats and the portrait toward a high-end, editorial feel.
+   Loaded last so it overrides selectively. Safe to remove as a block.
+   ===================================================================== */
+
+/* ---- Metallic champagne text (reusable) ---- */
+.gold-metal {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent-gold); /* fallback */
+}
+
+/* ---- Section labels: finer, wider, with a flanking hairline ---- */
+.section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.42em;
+  color: var(--accent-gold-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+}
+.section-label::before,
+.section-label::after {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent-gold));
+  opacity: 0.6;
+}
+.section-label::after {
+  background: linear-gradient(to left, transparent, var(--accent-gold));
+}
+
+/* ---- Divider: fading hairline instead of a hard bar ---- */
+.gold-divider {
+  width: 90px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
+  opacity: 0.9;
+  margin-top: 22px;
+}
+
+/* ---- Hero: cinematic backdrop layer + refined vignette ---- */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--hero-image);
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+/* Dark cinematic wash — only visible once a hero image is set,
+   keeps overlaid text crisp and legible */
+.hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.35) 40%, rgba(10,10,10,0.85) 100%),
+    radial-gradient(ellipse at 50% 42%, rgba(10,10,10,0) 30%, rgba(10,10,10,0.7) 100%);
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+/* Soft vignette on the hero regardless of media — adds depth */
+#hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 220px 60px rgba(0, 0, 0, 0.75);
+}
+.hero-content { z-index: 2; }
+.hero-scroll-indicator { z-index: 2; }
+
+/* ---- Hero type: more air, lighter display weight, metallic tagline ---- */
+.hero-label {
+  letter-spacing: 0.5em;
+  color: var(--accent-gold-soft);
+  margin-bottom: 30px;
+}
+#hero h1 {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin-bottom: 32px;
+}
+.hero-tagline {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 1;
+}
+.hero-sub { margin-top: 40px; margin-bottom: 48px; }
+
+/* ---- Buttons: metallic fill, refined weight, subtle sheen sweep ---- */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  padding: 15px 40px;
+  background: var(--gold-gradient);
+  letter-spacing: 0.16em;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.25) inset, 0 6px 20px rgba(201,168,76,0.18);
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+.btn-primary:hover {
+  background: var(--gold-gradient);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset, 0 10px 28px rgba(201,168,76,0.32);
+}
+.btn-primary:hover::before { left: 130%; }
+
+.btn-outline {
+  padding: 13px 34px;
+  letter-spacing: 0.14em;
+  border-color: var(--accent-gold-border);
+}
+
+/* ---- Stats: metallic numerals + finer labels ---- */
+.stat-number {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent-gold); /* fallback */
+  font-weight: 600;
+}
+.stat-check {
+  -webkit-text-fill-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+.stats-bar {
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---- Portrait: larger presence, layered frame, offset gold rule ---- */
+.about-photo { position: relative; }
+.photo-placeholder {
+  width: min(340px, 100%);
+  border-radius: 4px;
+  border: 1px solid var(--hairline);
+  box-shadow: 0 30px 70px -25px rgba(0,0,0,0.85);
+}
+/* Thin gold frame offset behind the portrait — a classic luxury detail */
+.about-photo::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(340px, 100%);
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--accent-gold-border);
+  border-radius: 4px;
+  transform: translate(calc(-50% + 16px), 16px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---- Nav logo: a touch more presence ---- */
+.nav-logo { letter-spacing: 0.22em; }
+
+/* ---- Reduced motion: honor user preference ---- */
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::before { transition: none; }
 }
