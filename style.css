@@ -1697,6 +1697,13 @@ textarea::placeholder {
   -webkit-text-fill-color: transparent;
   opacity: 1;
 }
+/* Lighter, more delicate tagline on phones & tablets (portable devices) */
+@media (max-width: 1023px) {
+  .hero-tagline {
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+}
 .hero-sub { margin-top: 40px; margin-bottom: 48px; }
 
 /* ---- Buttons: metallic fill, refined weight, subtle sheen sweep ---- */
