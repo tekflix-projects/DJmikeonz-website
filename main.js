@@ -202,12 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const form       = document.getElementById('booking-form');
   const submitBtn  = document.getElementById('submit-btn');
-  const btnText    = submitBtn.querySelector('.btn-text');
-  const btnLoading = submitBtn.querySelector('.btn-loading');
   const successMsg = document.getElementById('form-success');
   const errorMsg   = document.getElementById('form-error');
 
-  if (form) {
+  if (form && submitBtn && successMsg && errorMsg) {
+    const btnText    = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 

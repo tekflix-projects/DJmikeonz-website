@@ -535,6 +535,7 @@ p {
   margin-top: 2px;
 }
 
+.specialty-card h3,
 .specialty-card h4 {
   font-family: var(--font-body);
   font-size: 0.9rem;
