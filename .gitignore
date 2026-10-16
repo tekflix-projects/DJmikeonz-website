@@ -5,3 +5,7 @@
 *.mov
 *.MOV
 IMG_*.mp4
+
+# macOS + private business docs (anything committed here is publicly downloadable via GitHub Pages)
+.DS_Store
+*.docx
