@@ -316,6 +316,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ============ FOOTER YEAR ============
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
   // ============ FLOATING MOBILE CTA ============
 
   const floatingCta = document.querySelector('.floating-cta');
